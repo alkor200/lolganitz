@@ -22,5 +22,6 @@ def switch_on(relais_pin, on_time):
 if __name__ == '__main__':
     init()
 
-    for pin in relais:
-        switch_on(pin, 0.1)
+    while True:
+        for pin in relais:
+            switch_on(pin, 0.2)
