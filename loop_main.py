@@ -1,10 +1,9 @@
+import random
 import sys
 import time
-import enum
-import threading
-import random
 
 import RPi.GPIO as GPIO
+
 GPIO.setmode(GPIO.BCM)
 
 relais = [26, 16, 20, 21, 5, 6, 13, 19, 17, 18, 27, 22, 23, 24, 25, 12]
@@ -15,7 +14,7 @@ class Light:
     def __init__(self, number: int, pin: int):
         self.number = number
         self.pin = pin
-        self.state = False 
+        self.state = False
         GPIO.setup(self.pin, GPIO.OUT)
         GPIO.output(self.pin, GPIO.LOW)
 
@@ -70,30 +69,38 @@ class LightManager:
     def action_2(self):
         for i, light in enumerate(self.lights):
             light.turn_on()
-            self.lights[len(self.lights)-i-1].turn_on()
+            self.lights[len(self.lights) - i - 1].turn_on()
             time.sleep(0.2)
             light.turn_off()
-            self.lights[len(self.lights)-i-1].turn_off()
+            self.lights[len(self.lights) - i - 1].turn_off()
 
-    def random_light(self, sleep_time):
-        light_index = random.randint(0, len(self.lights))
-        self.lights[light_index].turn_on()
-        time.sleep(sleep_time)
-        self.lights[light_index].turn_off()
+    def random_lights(self, sleep_time, light_count):
+        while True:
+            light_indices = []
+            for i in range(light_count):
+                light_indices.append(random.randint(0, len(self.lights) - 1))
+
+            for index in light_indices:
+                self.lights[index].turn_on()
+
+            time.sleep(sleep_time)
+
+            for index in light_indices:
+                self.lights[index].turn_off()
 
 
 if __name__ == '__main__':
     light_list = []
-    i=0
+    i = 0
     for pin in relais:
         light_list.append(
-                Light(number=i,pin=pin)
+            Light(number=i, pin=pin)
         )
         i += 1
     light_manager = LightManager(light_list)
     while True:
         try:
-            light_manager.random_light(0.2)
+            light_manager.random_lights(0.2, 4)
         except KeyboardInterrupt:
             light_manager.all_off()
             sys.exit(0)
