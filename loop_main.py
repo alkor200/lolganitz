@@ -2,6 +2,7 @@ import sys
 import time
 import enum
 import threading
+import random
 
 import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BCM)
@@ -74,6 +75,12 @@ class LightManager:
             light.turn_off()
             self.lights[len(self.lights)-i-1].turn_off()
 
+    def random_light(self, sleep_time):
+        light_index = random.randint(0, len(self.lights))
+        self.lights[light_index].turn_on()
+        time.sleep(sleep_time)
+        self.lights[light_index].turn_off()
+
 
 if __name__ == '__main__':
     light_list = []
@@ -86,7 +93,7 @@ if __name__ == '__main__':
     light_manager = LightManager(light_list)
     while True:
         try:
-            light_manager.action_2()
+            light_manager.random_light(0.2)
         except KeyboardInterrupt:
             light_manager.all_off()
             sys.exit(0)
