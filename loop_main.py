@@ -2,6 +2,8 @@ import random
 import sys
 import time
 
+from collections import deque
+
 import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BCM)
@@ -74,11 +76,21 @@ class LightManager:
             light.turn_off()
             self.lights[len(self.lights) - i - 1].turn_off()
 
+    def check_unique_lights(self, light_indices):
+        return len(set(light_indices))
+
     def random_lights(self, sleep_time, light_count):
+        old_indices = None
         while True:
-            light_indices = []
+            light_indices = deque(maxlen=light_count)
             for i in range(light_count):
-                light_indices.append(random.randint(0, len(self.lights) - 1))
+                while True:
+                    index = random.randint(0, len(self.lights) - 1)
+                    light_indices.append(index)
+                    if self.check_unique_lights(list(light_indices)) == light_count:
+                        if list(light_indices) != old_indices:
+                            old_indices = list(light_indices)
+                            break
 
             for index in light_indices:
                 self.lights[index].turn_on()
@@ -100,7 +112,7 @@ if __name__ == '__main__':
     light_manager = LightManager(light_list)
     while True:
         try:
-            light_manager.random_lights(0.2, 4)
+            light_manager.random_lights(1, 1)
         except KeyboardInterrupt:
             light_manager.all_off()
             sys.exit(0)
