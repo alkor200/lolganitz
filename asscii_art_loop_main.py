@@ -156,34 +156,44 @@ class LightManager:
             self.display()
         time.sleep(0.3)
 
-
-
     def check_unique_lights(self, light_indices):
         return len(set(light_indices))
 
     def random_lights(self, sleep_time, light_count):
         old_indices = None
-        while True:
-            light_indices = deque(maxlen=light_count)
-            for i in range(light_count):
-                while True:
-                    index = random.randint(0, len(self.lights) - 1)
-                    light_indices.append(index)
-                    if self.check_unique_lights(list(light_indices)) == light_count:
-                        if list(light_indices) != old_indices:
-                            old_indices = list(light_indices)
-                            break
+        light_indices = deque(maxlen=light_count)
+        for i in range(light_count):
+            while True:
+                index = random.randint(0, len(self.lights) - 1)
+                light_indices.append(index)
+                if self.check_unique_lights(list(light_indices)) == light_count:
+                    if list(light_indices) != old_indices:
+                        old_indices = list(light_indices)
+                        break
+        for index in light_indices:
+            self.lights[index].turn_on()
+        self.display()
+        time.sleep(sleep_time)
+        for index in light_indices:
+            self.lights[index].turn_off()
 
-            for index in light_indices:
-                self.lights[index].turn_on()
-
+    def flicker(self):
+        print("ficker")
+        for light in self.lights:
+            light.turn_on()
+        indices = []
+        for i in range(12): 
+            indices.append(random.randint(0, len(self.lights) - 1))
+        for index in indices:
+            self.lights[index].turn_off()
+            self.lights[(index + 6)%16].turn_off()
             self.display()
-
-            time.sleep(sleep_time)
-
-            for index in light_indices:
-                self.lights[index].turn_off()
-
+            time.sleep(0.12)
+            self.lights[index].turn_on()
+            self.lights[(index + 6)%16].turn_on()
+            self.display()
+        time.sleep(0.3)
+        
     def display(self, with_numbers=True):
         os.system('cls' if os.name == 'nt' else 'clear')
         width = os.get_terminal_size().columns
@@ -210,7 +220,9 @@ if __name__ == '__main__':
     while True:
         try:
             # light_manager.random_lights(1, 3)
-            light_manager.ping_pong()
+            # light_manager.ping_pong()
+            # light_manager.random_lights(sleep_time=0.1, light_count=14)
+            light_manager.flicker()
         except KeyboardInterrupt:
             light_manager.all_off()
             sys.exit(0)
