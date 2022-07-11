@@ -184,7 +184,7 @@ class LightManager:
             for index in light_indices:
                 self.lights[index].turn_off()
 
-    def display(self):
+    def display(self, with_numbers=True):
         os.system('cls' if os.name == 'nt' else 'clear')
         width = os.get_terminal_size().columns
         first_char = True
@@ -194,6 +194,8 @@ class LightManager:
             else:
                     print('_', end=' ')
         print()
+        if with_numbers:
+            print("1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6")
 
 
 if __name__ == '__main__':
@@ -208,7 +210,7 @@ if __name__ == '__main__':
     while True:
         try:
             # light_manager.random_lights(1, 3)
-            light_manager.inverted_ping_pong()
+            light_manager.ping_pong()
         except KeyboardInterrupt:
             light_manager.all_off()
             sys.exit(0)
