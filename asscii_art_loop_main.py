@@ -111,47 +111,45 @@ class LightManager:
         self.run_in_row(reverse=True)
 
     def ping_pong(self):
-        middle = int(len(self.lights) / 2 - 1) + 1
-        i = 0
-        first = True
+        j = 0
         step = True
-        while True:
+        first = True
+        middle = int(len(self.lights) / 2 - 1) + 1
+        for i in range(2 * len(self.lights)):
             if step:
-                index = (middle + i) % len(self.lights)
+                index = (middle + j) % len(self.lights)
             else:
-                index = (middle - i) % len(self.lights)
+                index = (middle - j) % len(self.lights)
             if first:
-                i += 1
                 first = False
                 step = False
             if not step:
                 step = True
             else:
-                i += 1
+                j += 1
                 step = False
             self.lights[index].turn_on()
             self.display()
             time.sleep(0.3)
             self.lights[index].turn_off()
 
-    def inverted_ping_pong(self):
+    def ping_pong_inverted(self):
         middle = int(len(self.lights) / 2 - 1) + 1
-        i = 0
+        j = 0
         first = True
         step = True
-        while True:
+        for i in range(2 * len(self.lights)):
             if step:
-                index = (middle + i) % len(self.lights)
+                index = (middle + j) % len(self.lights)
             else:
-                index = (middle - i) % len(self.lights)
+                index = (middle - j) % len(self.lights)
             if first:
-                i += 1
                 first = False
                 step = False
             if not step:
                 step = True
             else:
-                i += 1
+                j += 1
                 step = False
             for light in self.lights:
                 if light.number != index:
@@ -198,7 +196,7 @@ class LightManager:
         step = True
         reverse = False
         count = 0
-        while True:
+        for j in range(2*len(self.lights)+1):
             if step:
                 index = (middle + i) % len(self.lights)
             else:
@@ -306,7 +304,6 @@ class LightManager:
         time.sleep(1)
         for light in self.lights:
             light.turn_off()
-
 
     def strobe(self, interval=0.1):
         for light in self.lights:
