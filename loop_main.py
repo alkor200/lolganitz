@@ -400,6 +400,7 @@ if __name__ == '__main__':
         except KeyboardInterrupt:
             light_manager.all_off()
             sys.exit(0)
-        except:
+        except Exception as e:
+            print(e)
             light_manager.all_off()
             pass
