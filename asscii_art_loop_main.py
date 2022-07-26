@@ -413,7 +413,20 @@ if __name__ == '__main__':
         light_manager.random_lights,
         light_manager.ping_pong,
         light_manager.flicker,
-        light_manager.strobe
+        light_manager.strobe,
+        light_manager.run_in_row,
+        light_manager.multiple_run_in_row,
+        light_manager.action_2,
+        light_manager.action_3,
+        light_manager.action_4,
+        light_manager.action_5,
+        light_manager.action_6,
+        light_manager.action_7,
+        light_manager.ping_pong_inverted,
+        light_manager.every_second_light,
+        light_manager.up_down,
+        light_manager.parable_lights,
+        light_manager.around_the_clock
     ]
     while True:
         try:
