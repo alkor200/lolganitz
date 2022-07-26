@@ -173,21 +173,17 @@ class LightManager:
             self.display()
         time.sleep(0.3)
 
-    def action_5(self, interval):
-        for i, light in enumerate(self.lights):
-            light.turn_on()
+    def action_5(self, interval=0.5):
+        for i in range(int(len(self.lights)/2)):
+            self.lights[i].turn_on()
             self.lights[len(self.lights) - i - 1].turn_on()
             self.display()
             time.sleep(interval)
-            # light.turn_off()
-            # self.lights[len(self.lights) - i - 1].turn_off()
-        for i, light in enumerate(self.lights):
-            light.turn_off()
+        for i in range(int(len(self.lights)/2)):
+            self.lights[i].turn_off()
             self.lights[len(self.lights) - i - 1].turn_off()
             self.display()
             time.sleep(interval)
-            # light.turn_off()
-            # self.lights[len(self.lights) - i - 1].turn_off()
 
     def action_6(self):
         middle = int(len(self.lights)/2 - 1) + 1
@@ -224,14 +220,14 @@ class LightManager:
             time.sleep(0.3)
             # self.lights[index].turn_off()
 
-    def action_7(self, interval):
-        for i, light in enumerate(self.lights):
-            light.turn_on()
+    def action_7(self, interval=0.3):
+        for i in range(int(len(self.lights)/2)):
+            self.lights[i].turn_on()
             self.lights[len(self.lights) - i - 1].turn_on()
             self.display()
             time.sleep(interval)
         mid = int(len(self.lights)/2) - 1
-        for i in range(mid):
+        for i in range(int(len(self.lights)/2)):
             self.lights[mid - i].turn_off()
             self.lights[mid + i + 1].turn_off()
             self.display()
@@ -244,7 +240,7 @@ class LightManager:
     def check_unique_lights(self, light_indices):
         return len(set(light_indices))
 
-    def random_lights(self, sleep_time=0.2, light_count=5):
+    def random_lights(self, sleep_time=0.2, light_count=3):
         old_indices = None
         light_indices = deque(maxlen=light_count)
         for i in range(light_count):
@@ -315,7 +311,7 @@ class LightManager:
             self.display()
         time.sleep(interval)
 
-    def up_down(self, upper_lights, lower_lights, interval):
+    def up_down(self, upper_lights=[1,3,5,7], lower_lights=[2,4,6,8], interval=0.4):
         for light in upper_lights:
             self.lights[light].turn_on()
             self.display()
@@ -367,7 +363,10 @@ class LightManager:
             self.all_off()
             self.display()
 
-    def around_the_clock(self, upper_lights, lower_lights, interval):
+    def around_the_clock(self,
+                         upper_lights=[1,2,3,4,5,6,7],
+                         lower_lights=[8,9,10,11,12,13],
+                         interval=0.6):
         for light in upper_lights:
             self.lights[light].turn_on()
             self.display()
