@@ -393,8 +393,8 @@ if __name__ == '__main__':
             start = time.time()
             effect = random.choice(effects)
             while later - start < runtime:
-                effect()
                 print(effect.__name__)
+                effect()
                 later = time.time()
 
         except KeyboardInterrupt:
