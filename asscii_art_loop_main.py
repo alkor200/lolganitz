@@ -92,7 +92,7 @@ class LightManager:
         self.run_in_row(reverse=True)
 
     def ping_pong(self):
-        middle = int(len(self.lights)/2 - 1) + 1
+        middle = int(len(self.lights) / 2 - 1) + 1
         i = 0
         first = True
         step = True
@@ -114,9 +114,9 @@ class LightManager:
             self.display()
             time.sleep(0.3)
             self.lights[index].turn_off()
-         
+
     def inverted_ping_pong(self):
-        middle = int(len(self.lights)/2 - 1) + 1
+        middle = int(len(self.lights) / 2 - 1) + 1
         i = 0
         first = True
         step = True
@@ -143,7 +143,7 @@ class LightManager:
                 light.turn_off()
 
     def action_4(self):
-        middle = int(len(self.lights)/2)
+        middle = int(len(self.lights) / 2)
         for light in self.lights:
             light.turn_on()
         for i in range(middle):
@@ -182,47 +182,129 @@ class LightManager:
         for light in self.lights:
             light.turn_on()
         indices = []
-        for i in range(12): 
+        for i in range(12):
             indices.append(random.randint(0, len(self.lights) - 1))
         for index in indices:
             self.lights[index].turn_off()
-            self.lights[(index + 6)%16].turn_off()
+            self.lights[(index + 6) % 16].turn_off()
             self.display()
             time.sleep(0.12)
             self.lights[index].turn_on()
-            self.lights[(index + 6)%16].turn_on()
+            self.lights[(index + 6) % 16].turn_on()
             self.display()
         time.sleep(0.3)
-        
+
+    def strobe(self, interval):
+        for light in self.lights:
+            light.turn_on()
+            self.display()
+        time.sleep(interval)
+        for light in self.lights:
+            light.turn_off()
+            self.display()
+        time.sleep(interval)
+
+    def up_down(self, upper_lights, lower_lights, interval):
+        for light in upper_lights:
+            self.lights[light].turn_on()
+            self.display()
+        time.sleep(interval)
+        for light in upper_lights:
+            self.lights[light].turn_off()
+            self.display()
+        for light in lower_lights:
+            self.lights[light].turn_on()
+            self.display()
+        time.sleep(interval)
+        for light in lower_lights:
+            self.lights[light].turn_off()
+            self.display()
+
+    def parable_lights(self):
+        for light in self.lights:
+            x = light.number
+            on_time = (0.342 * (x - 8) ** 2 + 3.919) / 25
+            light.turn_on()
+            try:
+                if not x == 0:
+                    self.lights[x-1].turn_on()
+            except:
+                pass
+            try:
+                self.lights[x+1].turn_on()
+            except:
+                pass
+            self.display()
+            time.sleep(on_time)
+            self.all_off()
+            self.display()
+        for light in self.lights[::-1][1:-1]:
+            x = light.number
+            on_time = (0.342 * (x - 8) ** 2 + 3.919) / 25
+            light.turn_on()
+            try:
+                if not x == 0:
+                    self.lights[x-1].turn_on()
+            except:
+                pass
+            try:
+                self.lights[x+1].turn_on()
+            except:
+                pass
+            self.display()
+            time.sleep(on_time)
+            self.all_off()
+            self.display()
+
+    def around_the_clock(self, upper_lights, lower_lights, interval):
+        for light in upper_lights:
+            self.lights[light].turn_on()
+            self.display()
+            time.sleep(interval)
+            self.all_off()
+            self.display()
+        for light in lower_lights[::-1]:
+            self.lights[light].turn_on()
+            self.display()
+            time.sleep(interval)
+            self.all_off()
+            self.display()
+
+
     def display(self, with_numbers=True):
         os.system('cls' if os.name == 'nt' else 'clear')
         width = os.get_terminal_size().columns
         first_char = True
         for light in self.lights:
             if light.state:
-                    print('X', end=' ')
+                print('X', end=' ')
             else:
-                    print('_', end=' ')
+                print('_', end=' ')
         print()
         if with_numbers:
             print("1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6")
 
 
+
 if __name__ == '__main__':
     light_list = []
     i = 0
+    light_manager = LightManager(light_list)
     for pin in relais:
         light_list.append(
             Light(number=i, pin=pin)
         )
         i += 1
-    light_manager = LightManager(light_list)
     while True:
         try:
             # light_manager.random_lights(1, 3)
             # light_manager.ping_pong()
             # light_manager.random_lights(sleep_time=0.1, light_count=14)
-            light_manager.flicker()
+            # light_manager.flicker()
+            # light_manager.strobe(0.5)
+            # light_manager.up_down([0, 2, 4, 6, 8, 10, 12, 14], [1, 3, 5, 7, 9, 11, 13, 15], 0.3)
+            # light_manager.parable_lights()
+            light_manager.around_the_clock([0, 2, 4, 6, 8, 10, 12, 14], [1, 3, 5, 7, 9, 11, 13, 15], 0.1)
         except KeyboardInterrupt:
             light_manager.all_off()
             sys.exit(0)
