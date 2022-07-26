@@ -392,13 +392,14 @@ if __name__ == '__main__':
             runtime = random.randint(5, 10)
             start = time.time()
             effect = random.choice(effects)
-            light_manager.current_effect = effect.__name__
             while later - start < runtime:
                 effect()
+                print(effect.__name__)
                 later = time.time()
 
         except KeyboardInterrupt:
             light_manager.all_off()
             sys.exit(0)
         except:
+            light_manager.all_off()
             pass
