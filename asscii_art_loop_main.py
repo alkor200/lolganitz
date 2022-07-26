@@ -44,19 +44,33 @@ class LightManager:
     def __init__(self, light_list: list):
         self.lights = light_list
 
-    def run_in_row(self, reverse=False):
+    def run_in_row(self, reverse=False, interval=0.1):
         if not reverse:
-            for light in light_list:
+            for light in self.lights:
                 light.turn_on()
                 self.display()
-                time.sleep(0.1)
+                time.sleep(interval)
                 light.turn_off()
         else:
-            for i in range(len(light_list)):
-                light_list[len(light_list) - 1 - i].turn_on()
+            for i in range(len(self.lights)):
+                light_list[len(self.lights) - 1 - i].turn_on()
                 self.display()
                 time.sleep(0.1)
-                light_list[len(light_list) - 1 - i].turn_off()
+                light_list[len(self.lights) - 1 - i].turn_off()
+
+    def multiple_run_in_row(self, interval=0.3):
+        offset = 4
+        for i, light in enumerate(self.lights):
+            light.turn_on()
+            self.lights[(i + offset) % len(self.lights)].turn_on()
+            self.lights[(i + 2*offset) % len(self.lights)].turn_on()
+            self.lights[(i + 3*offset) % len(self.lights)].turn_on()
+            self.display()
+            time.sleep(interval)
+            light.turn_off()
+            self.lights[(i + offset) % len(self.lights)].turn_off()
+            self.lights[(i + 2*offset) % len(self.lights)].turn_off()
+            self.lights[(i + 3*offset) % len(self.lights)].turn_off()
 
     def all_on(self):
         for light in light_list:
@@ -68,12 +82,16 @@ class LightManager:
 
     def action_1(self):
         self.all_on()
+        self.display()
         time.sleep(3)
         self.all_off()
+        self.display()
         self.run_in_row()
         self.all_on()
+        self.display()
         time.sleep(1)
         self.all_off()
+        self.display()
         time.sleep(1)
 
     def action_2(self):
@@ -156,6 +174,74 @@ class LightManager:
             self.display()
         time.sleep(0.3)
 
+    def action_5(self, interval):
+        for i, light in enumerate(self.lights):
+            light.turn_on()
+            self.lights[len(self.lights) - i - 1].turn_on()
+            self.display()
+            time.sleep(interval)
+            # light.turn_off()
+            # self.lights[len(self.lights) - i - 1].turn_off()
+        for i, light in enumerate(self.lights):
+            light.turn_off()
+            self.lights[len(self.lights) - i - 1].turn_off()
+            self.display()
+            time.sleep(interval)
+            # light.turn_off()
+            # self.lights[len(self.lights) - i - 1].turn_off()
+
+    def action_6(self):
+        middle = int(len(self.lights)/2 - 1) + 1
+        i = 0
+        first = True
+        step = True
+        reverse = False
+        count = 0
+        while True:
+            if step:
+                index = (middle + i) % len(self.lights)
+            else:
+                index = (middle - i) % len(self.lights)
+            if first:
+                # i += 1
+                first = False
+                step = False
+            if not step:
+                step = True
+            else:
+                i += 1
+                step = False
+            if not reverse:
+                self.lights[index].turn_on()
+            else:
+                self.lights[index].turn_off()
+            self.display()
+            if count < len(self.lights):
+                count += 1
+            else:
+                count = 0
+                i = 0
+                reverse = not reverse
+            time.sleep(0.3)
+            # self.lights[index].turn_off()
+
+    def action_7(self, interval):
+        for i, light in enumerate(self.lights):
+            light.turn_on()
+            self.lights[len(self.lights) - i - 1].turn_on()
+            self.display()
+            time.sleep(interval)
+        mid = int(len(self.lights)/2) - 1
+        for i in range(mid):
+            self.lights[mid - i].turn_off()
+            self.lights[mid + i + 1].turn_off()
+            self.display()
+            time.sleep(interval)
+        self.lights[0].turn_off()
+        self.lights[len(self.lights)-1].turn_off()
+        self.display()
+        time.sleep(2 * interval)
+
     def check_unique_lights(self, light_indices):
         return len(set(light_indices))
 
@@ -186,13 +272,40 @@ class LightManager:
             indices.append(random.randint(0, len(self.lights) - 1))
         for index in indices:
             self.lights[index].turn_off()
-            self.lights[(index + 6) % 16].turn_off()
+            self.lights[(index + 6)%len(self.lights)].turn_off()
             self.display()
-            time.sleep(0.12)
+            time.sleep(0.15)
             self.lights[index].turn_on()
-            self.lights[(index + 6) % 16].turn_on()
+            self.lights[(index + 6)%len(self.lights)].turn_on()
             self.display()
         time.sleep(0.3)
+
+    def every_second_light(self):
+        second = False
+        for light in self.lights:
+            if second:
+                light.turn_on()
+                second = False
+            else:
+                light.turn_off()
+                second = True
+        self.display()
+        time.sleep(1)
+        for light in self.lights:
+            light.turn_off()
+        second = False
+        for light in self.lights:
+            if second:
+                light.turn_off()
+                second = False
+            else:
+                light.turn_on()
+                second = True
+        self.display()
+        time.sleep(1)
+        for light in self.lights:
+            light.turn_off()
+
 
     def strobe(self, interval):
         for light in self.lights:
