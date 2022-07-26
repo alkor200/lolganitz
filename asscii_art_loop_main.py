@@ -43,6 +43,7 @@ class LightManager:
 
     def __init__(self, light_list: list):
         self.lights = light_list
+        self.current_effect = ""
 
     def run_in_row(self, reverse=False, interval=0.1):
         if not reverse:
@@ -245,7 +246,7 @@ class LightManager:
     def check_unique_lights(self, light_indices):
         return len(set(light_indices))
 
-    def random_lights(self, sleep_time, light_count):
+    def random_lights(self, sleep_time=0.2, light_count=5):
         old_indices = None
         light_indices = deque(maxlen=light_count)
         for i in range(light_count):
@@ -307,7 +308,7 @@ class LightManager:
             light.turn_off()
 
 
-    def strobe(self, interval):
+    def strobe(self, interval=0.1):
         for light in self.lights:
             light.turn_on()
             self.display()
@@ -388,6 +389,7 @@ class LightManager:
         os.system('cls' if os.name == 'nt' else 'clear')
         width = os.get_terminal_size().columns
         first_char = True
+        print(self.current_effect)
         for light in self.lights:
             if light.state:
                 print('X', end=' ')
@@ -408,6 +410,14 @@ if __name__ == '__main__':
             Light(number=i, pin=pin)
         )
         i += 1
+    later = time.time()
+
+    effects = [
+        light_manager.random_lights,
+        light_manager.ping_pong,
+        light_manager.flicker,
+        light_manager.strobe
+    ]
     while True:
         try:
             # light_manager.random_lights(1, 3)
@@ -417,7 +427,18 @@ if __name__ == '__main__':
             # light_manager.strobe(0.5)
             # light_manager.up_down([0, 2, 4, 6, 8, 10, 12, 14], [1, 3, 5, 7, 9, 11, 13, 15], 0.3)
             # light_manager.parable_lights()
-            light_manager.around_the_clock([0, 2, 4, 6, 8, 10, 12, 14], [1, 3, 5, 7, 9, 11, 13, 15], 0.1)
+            # light_manager.around_the_clock([0, 2, 4, 6, 8, 10, 12, 14], [1, 3, 5, 7, 9, 11, 13, 15], 0.1)
+
+            runtime = random.randint(5, 10)
+            start = time.time()
+            effect = random.choice(effects)
+            light_manager.current_effect = effect.__name__
+            while later - start < runtime:
+                effect()
+                later = time.time()
+
+
+
         except KeyboardInterrupt:
             light_manager.all_off()
             sys.exit(0)
