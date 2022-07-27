@@ -402,7 +402,7 @@ class LightManager:
 
     def circle_switch(self, interval=1):
         circle_1 = [0,1,2,3]
-        circle_2 = [5,6,7,8,10,11]
+        circle_2 = [5,6,7,8,10,11,12]
         circles = [circle_1, circle_2]
 
         for circle in circles:
