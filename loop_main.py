@@ -291,6 +291,11 @@ class LightManager:
 
         time.sleep(interval)
 
+    def action_strobe(self):
+        for i in range(15):
+            self.strobe()
+        time.sleep(5)
+
     def up_down(self, upper_lights=[1, 3, 5, 7], lower_lights=[2, 4, 6, 8], interval=0.4):
         for light in upper_lights:
             self.lights[light].turn_on()
@@ -398,7 +403,7 @@ if __name__ == '__main__':
                 # effect()
                 # later = time.time()
             #light_manager.around_the_clock()
-            light_manager.strobe()
+            light_manager.action_strobe()
         except KeyboardInterrupt:
             light_manager.all_off()
             sys.exit(0)
