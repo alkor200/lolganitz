@@ -97,7 +97,7 @@ class LightManager:
         for i, light in enumerate(self.lights):
             light.turn_on()
             self.lights[len(self.lights) - i - 1].turn_on()
-            time.sleep(0.1)
+            time.sleep(0.2)
             light.turn_off()
             self.lights[len(self.lights) - i - 1].turn_off()
 
