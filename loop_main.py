@@ -322,6 +322,21 @@ class LightManager:
             time.sleep(2/i)
             for light in lower_lights:
                 self.lights[light].turn_off()
+        for i in range(2,15)[::-1]:
+
+            for light in upper_lights:
+                self.lights[light].turn_on()
+
+            time.sleep(2/i)
+            for light in upper_lights:
+                self.lights[light].turn_off()
+
+            for light in lower_lights:
+                self.lights[light].turn_on()
+
+            time.sleep(2/i)
+            for light in lower_lights:
+                self.lights[light].turn_off()
 
     def parable_lights(self):
         for light in self.lights:
