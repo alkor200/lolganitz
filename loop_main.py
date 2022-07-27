@@ -306,35 +306,35 @@ class LightManager:
         time.sleep(3)
 
     def up_down(self, upper_lights=[1, 2, 4, 7, 8, 10],
-                lower_lights=[0,3, 5, 9, 11, 12], interval=0.4):
-        for i in range(2,15):
+                lower_lights=[0, 3, 5, 9, 11, 12], interval=0.4):
+        for i in range(2, 15):
 
             for light in upper_lights:
                 self.lights[light].turn_on()
 
-            time.sleep(2/i)
-            for light in upper_lights:
-                self.lights[light].turn_off()
-
-            for light in lower_lights:
-                self.lights[light].turn_on()
-
-            time.sleep(2/i)
-            for light in lower_lights:
-                self.lights[light].turn_off()
-        for i in range(2,15)[::-1]:
-
-            for light in upper_lights:
-                self.lights[light].turn_on()
-
-            time.sleep(2/i)
+            time.sleep(2 / i)
             for light in upper_lights:
                 self.lights[light].turn_off()
 
             for light in lower_lights:
                 self.lights[light].turn_on()
 
-            time.sleep(2/i)
+            time.sleep(2 / i)
+            for light in lower_lights:
+                self.lights[light].turn_off()
+        for i in range(2, 15)[::-1]:
+
+            for light in upper_lights:
+                self.lights[light].turn_on()
+
+            time.sleep(2 / i)
+            for light in upper_lights:
+                self.lights[light].turn_off()
+
+            for light in lower_lights:
+                self.lights[light].turn_on()
+
+            time.sleep(2 / i)
             for light in lower_lights:
                 self.lights[light].turn_off()
 
@@ -389,6 +389,16 @@ class LightManager:
             time.sleep(interval)
             self.all_off()
 
+    def bounce(self, interval=0.2):
+        lights = [0, 1, 2, 3, 5, 6, 7, 9, 10, 11, 12]
+        for light in lights:
+            light.turn_on()
+            time.sleep(interval)
+            light.turn_off()
+        for light in lights[::-1]:
+            light.turn_on()
+            time.sleep(interval)
+            light.turn_off()
 
 if __name__ == '__main__':
     light_list = []
@@ -422,13 +432,17 @@ if __name__ == '__main__':
     ]
     while True:
         try:
+            """
             runtime = random.randint(30, 50)
             start = time.time()
             effect = random.choice(effects)
             while later - start < runtime:
                 print(effect.__name__)
                 effect()
+                light_manager.all_off()
                 later = time.time()
+            """
+            light_manager.bounce()
 
         except KeyboardInterrupt:
             light_manager.all_off()
