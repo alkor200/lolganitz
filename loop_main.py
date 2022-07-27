@@ -400,7 +400,7 @@ class LightManager:
             time.sleep(interval)
             self.lights[light].turn_off()
 
-    def circle_switch(self, interval=0.2):
+    def circle_switch(self, interval=1):
         circle_1 = [0,1,2,3]
         circle_2 = [5,6,7,8,10]
         circles = [circle_1, circle_2]
