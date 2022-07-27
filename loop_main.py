@@ -82,7 +82,6 @@ class LightManager:
             self.lights[(i + 2 * offset) % len(self.lights)].turn_off()
             self.lights[(i + 3 * offset) % len(self.lights)].turn_off()
 
-
     def action_1(self):
         self.all_on()
         time.sleep(3)
@@ -158,11 +157,11 @@ class LightManager:
         for light in self.lights:
             light.turn_on()
         for i in range(middle):
-            self.lights[middle - i].turn_off()
-            self.lights[middle + i].turn_off()
+            self.lights[middle - i - 1].turn_off()
+            self.lights[middle + i + 1].turn_off()
             time.sleep(0.2)
-            self.lights[middle - i].turn_on()
-            self.lights[middle + i].turn_on()
+            self.lights[middle - i - 1].turn_on()
+            self.lights[middle + i + 1].turn_on()
         time.sleep(0.3)
 
     def action_5(self, interval=0.5):
@@ -275,7 +274,6 @@ class LightManager:
         time.sleep(1)
         for light in self.lights:
             light.turn_off()
-
 
     def all_on(self):
         for light in self.lights:
@@ -399,10 +397,10 @@ if __name__ == '__main__':
             # start = time.time()
             # effect = random.choice(effects)
             # while later - start < runtime:
-                # print(effect.__name__)
-                # effect()
-                # later = time.time()
-            #light_manager.around_the_clock()
+            # print(effect.__name__)
+            # effect()
+            # later = time.time()
+            # light_manager.around_the_clock()
             light_manager.action_4()
         except KeyboardInterrupt:
             light_manager.all_off()
