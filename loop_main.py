@@ -401,8 +401,8 @@ if __name__ == '__main__':
                 # print(effect.__name__)
                 # effect()
                 # later = time.time()
-            light_manager.around_the_clock()
-
+            #light_manager.around_the_clock()
+            light_manager.random_lights()
         except KeyboardInterrupt:
             light_manager.all_off()
             sys.exit(0)
