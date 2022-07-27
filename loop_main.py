@@ -408,10 +408,9 @@ class LightManager:
         for circle in circles:
             for light in circle:
                 self.lights[light].turn_on()
-                time.sleep(interval)
+            time.sleep(interval)
             for light in circle:
                 self.lights[light].turn_off()
-                time.sleep(interval)
 
 
 if __name__ == '__main__':
