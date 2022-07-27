@@ -176,12 +176,12 @@ class LightManager:
     def action_5(self, interval=0.5):
         for i in range(int(len(self.lights)/2)):
             self.lights[i].turn_on()
-            self.lights[len(self.lights) - i - 1].turn_on()
+            self.lights[len(self.lights) - i].turn_on()
             self.display()
             time.sleep(interval)
         for i in range(int(len(self.lights)/2)):
             self.lights[i].turn_off()
-            self.lights[len(self.lights) - i - 1].turn_off()
+            self.lights[len(self.lights) - i].turn_off()
             self.display()
             time.sleep(interval)
 
