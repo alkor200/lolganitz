@@ -389,8 +389,8 @@ class LightManager:
             time.sleep(interval)
             self.all_off()
 
-    def bounce(self, interval=0.2):
-        lights = [0, 1, 2, 3, 5, 6, 7, 9, 10, 11, 12]
+    def bounce(self, interval=0.15):
+        lights = [0, 1, 2, 3, 5, 6, 7, 9, 10, 11]
         for light in lights:
             self.lights[light].turn_on()
             time.sleep(interval)
