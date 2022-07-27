@@ -403,7 +403,7 @@ if __name__ == '__main__':
                 # effect()
                 # later = time.time()
             #light_manager.around_the_clock()
-            light_manager.multiple_run_in_row()
+            light_manager.action_2()
         except KeyboardInterrupt:
             light_manager.all_off()
             sys.exit(0)
