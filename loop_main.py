@@ -307,7 +307,7 @@ class LightManager:
 
     def up_down(self, upper_lights=[1, 2, 4, 7, 8, 10],
                 lower_lights=[0,3, 5, 9, 11, 12], interval=0.4):
-        for i in range(10):
+        for i in range(1,10):
 
             for light in upper_lights:
                 self.lights[light].turn_on()
