@@ -341,7 +341,7 @@ class LightManager:
     def parable_lights(self):
         for light in self.lights:
             x = light.number
-            on_time = (0.342 * (x - 8) ** 2 + 3.919) / 25
+            on_time = (0.342 * (x - 6.5) ** 2 + 3.919) / 25
             light.turn_on()
             try:
                 if not x == 0:
@@ -358,7 +358,7 @@ class LightManager:
 
         for light in self.lights[::-1][1:-1]:
             x = light.number
-            on_time = (0.342 * (x - 8) ** 2 + 3.919) / 25
+            on_time = (0.342 * (x - 6.5) ** 2 + 3.919) / 25
             light.turn_on()
             try:
                 if not x == 0:
