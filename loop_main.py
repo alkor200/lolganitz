@@ -248,7 +248,7 @@ class LightManager:
 
         for light in off_lights:
             light.turn_off()
-        time.sleep(0.15)
+        time.sleep(0.2)
 
     def every_second_light(self):
         second = False
