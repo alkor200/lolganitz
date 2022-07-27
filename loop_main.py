@@ -244,7 +244,7 @@ class LightManager:
         for light in self.lights:
             light.turn_on()
 
-        off_lights = random.choices(self.lights, k=5)
+        off_lights = random.choices(self.lights, k=3)
 
         for light in off_lights:
             light.turn_off()
