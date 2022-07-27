@@ -1,4 +1,5 @@
 import time
+import sys
 
 import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BCM)
@@ -17,6 +18,7 @@ def switch_on(relais_pin, on_time):
         GPIO.output(relais_pin, GPIO.LOW)
     except KeyboardInterrupt:
         GPIO.output(relais_pin, GPIO.LOW)
+        sys.exit(0)
 
 
 if __name__ == '__main__':

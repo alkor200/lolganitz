@@ -8,7 +8,7 @@ import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BCM)
 
-relais = [26, 16, 20, 21, 5, 6, 13, 19, 17, 18, 27, 22, 23]  # , 24, 25, 12]
+relais = [26, 16, 20, 21, 5, 6, 19, 13, 18, 17, 27, 23, 22]  # , 24, 25, 12]
 
 
 class Light:
@@ -56,7 +56,7 @@ class LightManager:
         return len(set(light_indices))
 
     ### EFFECTS ####
-    def run_in_row(self, reverse=False, interval=0.1):
+    def run_in_row(self, reverse=False, interval=0.5):
         if not reverse:
             for light in self.lights:
                 light.turn_on()
@@ -280,6 +280,11 @@ class LightManager:
         for light in self.lights:
             light.turn_off()
 
+
+    def all_on(self):
+        for light in self.lights:
+            light.turn_on()
+
     def strobe(self, interval=0.1):
         for light in self.lights:
             light.turn_on()
@@ -341,8 +346,8 @@ class LightManager:
             self.all_off()
 
     def around_the_clock(self,
-                         upper_lights=[1, 2, 3, 4, 5, 6, 7],
-                         lower_lights=[8, 9, 10, 11, 12],
+                         upper_lights=[1, 2, 3, 5, 8, 9, 11, 12, 13],
+                         lower_lights=[4, 6, 7, 10],
                          interval=0.6):
         for light in upper_lights:
             self.lights[light].turn_on()
@@ -389,13 +394,14 @@ if __name__ == '__main__':
     ]
     while True:
         try:
-            runtime = random.randint(20, 30)
-            start = time.time()
-            effect = random.choice(effects)
-            while later - start < runtime:
-                print(effect.__name__)
-                effect()
-                later = time.time()
+            # runtime = random.randint(20, 30)
+            # start = time.time()
+            # effect = random.choice(effects)
+            # while later - start < runtime:
+                # print(effect.__name__)
+                # effect()
+                # later = time.time()
+            light_manager.around_the_clock()
 
         except KeyboardInterrupt:
             light_manager.all_off()
