@@ -248,10 +248,10 @@ class LightManager:
             indices.append(random.randint(0, len(self.lights) - 1))
         for index in indices:
             self.lights[index].turn_off()
-            self.lights[(index + 6) % len(self.lights)].turn_off()
+            #self.lights[(index + 6) % len(self.lights)].turn_off()
             time.sleep(0.15)
             self.lights[index].turn_on()
-            self.lights[(index + 6) % len(self.lights)].turn_on()
+            #self.lights[(index + 6) % len(self.lights)].turn_on()
 
     def every_second_light(self):
         second = False
