@@ -398,7 +398,7 @@ if __name__ == '__main__':
                 # effect()
                 # later = time.time()
             #light_manager.around_the_clock()
-            light_manager.flicker()
+            light_manager.strobe()
         except KeyboardInterrupt:
             light_manager.all_off()
             sys.exit(0)
