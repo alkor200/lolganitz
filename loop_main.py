@@ -402,7 +402,7 @@ if __name__ == '__main__':
                 # effect()
                 # later = time.time()
             #light_manager.around_the_clock()
-            light_manager.random_lights()
+            light_manager.ping_pong()
         except KeyboardInterrupt:
             light_manager.all_off()
             sys.exit(0)
