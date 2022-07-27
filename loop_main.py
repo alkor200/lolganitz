@@ -281,7 +281,7 @@ class LightManager:
         for light in self.lights:
             light.turn_on()
 
-    def strobe(self, interval=0.1):
+    def strobe(self, interval=0.07):
         for light in self.lights:
             light.turn_on()
 
@@ -294,7 +294,7 @@ class LightManager:
     def action_strobe(self):
         for i in range(15):
             self.strobe()
-        time.sleep(5)
+        time.sleep(3)
 
     def up_down(self, upper_lights=[1, 3, 5, 7], lower_lights=[2, 4, 6, 8], interval=0.4):
         for light in upper_lights:
