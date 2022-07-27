@@ -432,6 +432,17 @@ class LightManager:
             self.lights[light].turn_off()
             time.sleep(interval)
 
+    def both_circle_fill(self, interval=1):
+        circle_1 = [0, 1, 2, 3]
+        circle_2 = [5, 6, 7, 8, 10]
+        circles = [circle_1, circle_2]
+
+        for circle in circles:
+            for light in circle:
+                self.lights[light].turn_on()
+                time.sleep(interval)
+            for light in circle:
+                self.lights[light].turn_off()
 
 if __name__ == '__main__':
     light_list = []
