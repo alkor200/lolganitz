@@ -444,6 +444,20 @@ class LightManager:
             for light in circle:
                 self.lights[light].turn_off()
 
+    def switch_small_big(self, interval=0.4):
+        small = [0,2,3,4,6,8,10,11]
+        big = [1,5,7,9,12]
+
+        all = [small, big]
+
+        for lights in all:
+            for light in lights:
+                self.lights[light].turn_on()
+            time.sleep(interval)
+            for light in lights:
+                self.lights[light].turn_off()
+
+
 if __name__ == '__main__':
     light_list = []
     i = 0
@@ -473,6 +487,10 @@ if __name__ == '__main__':
         light_manager.up_down,
         light_manager.parable_lights,
         light_manager.around_the_clock
+        light_manager.bounce,
+        light_manager.left_circle_fill,
+        light_manager.right_circle_fill,
+
     ]
     while True:
         try:
