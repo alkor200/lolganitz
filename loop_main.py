@@ -221,6 +221,9 @@ class LightManager:
             self.lights[len(self.lights) - i - 1].turn_on()
             time.sleep(interval)
         mid = int(len(self.lights) / 2) - 1
+        self.lights[6].turn_on()
+        time.sleep(interval)
+        self.lights[6].turn_off()
         for i in range(int(len(self.lights) / 2)):
             self.lights[mid - i].turn_off()
             self.lights[mid + i + 1].turn_off()
@@ -228,9 +231,7 @@ class LightManager:
         self.lights[0].turn_off()
         self.lights[len(self.lights) - 1].turn_off()
         time.sleep(2 * interval)
-        self.lights[6].turn_on()
-        time.sleep(interval)
-        self.lights[6].turn_off()
+
 
     def random_lights(self, sleep_time=0.2, light_count=3):
         old_indices = None
