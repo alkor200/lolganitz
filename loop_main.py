@@ -232,7 +232,6 @@ class LightManager:
         self.lights[len(self.lights) - 1].turn_off()
         time.sleep(2 * interval)
 
-
     def random_lights(self, sleep_time=0.2, light_count=3):
         old_indices = None
         light_indices = deque(maxlen=light_count)
@@ -306,7 +305,8 @@ class LightManager:
             self.strobe()
         time.sleep(3)
 
-    def up_down(self, upper_lights=[1, 3, 5, 7], lower_lights=[2, 4, 6, 8], interval=0.4):
+    def up_down(self, upper_lights=[1, 2, 4, 7, 8, 10],
+                lower_lights=[3, 5, 6, 9, 11, 12], interval=0.4):
         for light in upper_lights:
             self.lights[light].turn_on()
 
