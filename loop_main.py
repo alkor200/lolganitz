@@ -422,15 +422,14 @@ if __name__ == '__main__':
     ]
     while True:
         try:
-            # runtime = random.randint(20, 30)
-            # start = time.time()
-            # effect = random.choice(effects)
-            # while later - start < runtime:
-            # print(effect.__name__)
-            # effect()
-            # later = time.time()
-            # light_manager.around_the_clock()
-            light_manager.around_the_clock()
+            runtime = random.randint(30, 50)
+            start = time.time()
+            effect = random.choice(effects)
+            while later - start < runtime:
+                print(effect.__name__)
+                effect()
+                later = time.time()
+
         except KeyboardInterrupt:
             light_manager.all_off()
             sys.exit(0)
