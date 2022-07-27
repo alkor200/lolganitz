@@ -307,19 +307,21 @@ class LightManager:
 
     def up_down(self, upper_lights=[1, 2, 4, 7, 8, 10],
                 lower_lights=[0,3, 5, 9, 11, 12], interval=0.4):
-        for light in upper_lights:
-            self.lights[light].turn_on()
+        for i in range(10):
 
-        time.sleep(interval)
-        for light in upper_lights:
-            self.lights[light].turn_off()
+            for light in upper_lights:
+                self.lights[light].turn_on()
 
-        for light in lower_lights:
-            self.lights[light].turn_on()
+            time.sleep(1/i)
+            for light in upper_lights:
+                self.lights[light].turn_off()
 
-        time.sleep(interval)
-        for light in lower_lights:
-            self.lights[light].turn_off()
+            for light in lower_lights:
+                self.lights[light].turn_on()
+
+            time.sleep(1/i)
+            for light in lower_lights:
+                self.lights[light].turn_off()
 
     def parable_lights(self):
         for light in self.lights:
