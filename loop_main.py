@@ -346,7 +346,7 @@ class LightManager:
             self.all_off()
 
     def around_the_clock(self,
-                         upper_lights=[0, 1, 2, 4, 7, 8, 10, 11, 12],
+                         upper_lights=[0, 1, 2, 4, 7, 8, 10, 12, 11],
                          lower_lights=[3, 5, 6, 9],
                          interval=0.2):
         for light in upper_lights:
