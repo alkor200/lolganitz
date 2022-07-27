@@ -486,7 +486,7 @@ if __name__ == '__main__':
                 light_manager.all_off()
                 later = time.time()
             """
-            light_manager.right_circle_fill()
+            light_manager.both_circle_fill()
 
         except KeyboardInterrupt:
             light_manager.all_off()
