@@ -292,7 +292,7 @@ class LightManager:
         time.sleep(interval)
 
     def action_strobe(self):
-        for i in range(15):
+        for i in range(20):
             self.strobe()
         time.sleep(3)
 
