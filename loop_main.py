@@ -8,7 +8,7 @@ import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BCM)
 
-relais = [26, 16, 20, 21, 5, 6, 13, 19, 17, 18, 27, 22, 23, 24, 25, 12]
+relais = [26, 16, 20, 21, 5, 6, 13, 19, 17, 18, 27, 22, 23]  # , 24, 25, 12]
 
 
 class Light:
@@ -389,7 +389,7 @@ if __name__ == '__main__':
     ]
     while True:
         try:
-            runtime = random.randint(5, 10)
+            runtime = random.randint(20, 30)
             start = time.time()
             effect = random.choice(effects)
             while later - start < runtime:
