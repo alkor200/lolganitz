@@ -306,7 +306,7 @@ class LightManager:
         time.sleep(3)
 
     def up_down(self, upper_lights=[1, 2, 4, 7, 8, 10],
-                lower_lights=[0,3, 5, 6, 9, 11, 12], interval=0.4):
+                lower_lights=[0,3, 5, 9, 11, 12], interval=0.4):
         for light in upper_lights:
             self.lights[light].turn_on()
 
