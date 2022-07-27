@@ -400,6 +400,20 @@ class LightManager:
             time.sleep(interval)
             self.lights[light].turn_off()
 
+    def circle_switch(self, interval=0.2):
+        circle_1 = [0,1,2,3]
+        circle_2 = [5,6,7,8,10]
+        circles = [circle_1, circle_2]
+
+        for circle in circles:
+            for light in circle:
+                self.lights[light].turn_on()
+                time.sleep(interval)
+            for light in circle:
+                self.lights[light].turn_off()
+                time.sleep(interval)
+
+
 if __name__ == '__main__':
     light_list = []
     i = 0
@@ -442,7 +456,7 @@ if __name__ == '__main__':
                 light_manager.all_off()
                 later = time.time()
             """
-            light_manager.bounce()
+            light_manager.circle_switch()
 
         except KeyboardInterrupt:
             light_manager.all_off()
