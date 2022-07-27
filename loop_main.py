@@ -56,7 +56,7 @@ class LightManager:
         return len(set(light_indices))
 
     ### EFFECTS ####
-    def run_in_row(self, reverse=False, interval=0.2):
+    def run_in_row(self, reverse=False, interval=0.3):
         if not reverse:
             for light in self.lights:
                 light.turn_on()
