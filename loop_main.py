@@ -378,7 +378,7 @@ if __name__ == '__main__':
         light_manager.random_lights,
         light_manager.ping_pong,
         light_manager.flicker,
-        light_manager.strobe,
+        light_manager.action_strobe,
         light_manager.run_in_row,
         light_manager.multiple_run_in_row,
         light_manager.action_2,
@@ -403,7 +403,7 @@ if __name__ == '__main__':
                 # effect()
                 # later = time.time()
             #light_manager.around_the_clock()
-            light_manager.action_strobe()
+            light_manager.run_in_row()
         except KeyboardInterrupt:
             light_manager.all_off()
             sys.exit(0)
