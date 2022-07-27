@@ -413,7 +413,7 @@ if __name__ == '__main__':
             # effect()
             # later = time.time()
             # light_manager.around_the_clock()
-            light_manager.action_7()
+            light_manager.ping_pong_inverted()
         except KeyboardInterrupt:
             light_manager.all_off()
             sys.exit(0)
