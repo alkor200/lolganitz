@@ -179,9 +179,9 @@ class LightManager:
             self.lights[len(self.lights) - i].turn_on()
             self.display()
             time.sleep(interval)
-        self.lights[int(len(self.lights)/2)].turn_on()
+        self.lights[6].turn_on()
         time.sleep(interval)
-        self.lights[int(len(self.lights)/2)].turn_off()
+        self.lights[6].turn_off()
 
         for i in range(int(len(self.lights)/2)):
             self.lights[i].turn_off()
