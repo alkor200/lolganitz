@@ -252,7 +252,6 @@ class LightManager:
             time.sleep(0.15)
             self.lights[index].turn_on()
             self.lights[(index + 6) % len(self.lights)].turn_on()
-        time.sleep(0.3)
 
     def every_second_light(self):
         second = False
