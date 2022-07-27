@@ -211,9 +211,9 @@ class LightManager:
                 count = 0
                 i = 0
                 reverse = not reverse
-            time.sleep(0.3)
+            time.sleep(0.2)
         self.lights[12].turn_off()
-        time.sleep(0.3)
+        time.sleep(0.2)
 
     def action_7(self, interval=0.3):
         for i in range(int(len(self.lights) / 2)):
