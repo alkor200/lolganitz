@@ -243,15 +243,12 @@ class LightManager:
         print("ficker")
         for light in self.lights:
             light.turn_on()
-        indices = []
-        for i in range(12):
-            indices.append(random.randint(0, len(self.lights) - 1))
-        for index in indices:
-            self.lights[index].turn_off()
-            #self.lights[(index + 6) % len(self.lights)].turn_off()
+
+        off_lights = random.choices(self.lights, k=5)
+
+        for light in off_lights:
+            light.turn_off()
             time.sleep(0.15)
-            self.lights[index].turn_on()
-            #self.lights[(index + 6) % len(self.lights)].turn_on()
 
     def every_second_light(self):
         second = False
