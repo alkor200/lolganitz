@@ -392,13 +392,13 @@ class LightManager:
     def bounce(self, interval=0.2):
         lights = [0, 1, 2, 3, 5, 6, 7, 9, 10, 11, 12]
         for light in lights:
-            light.turn_on()
+            self.lights[light].turn_on()
             time.sleep(interval)
-            light.turn_off()
+            self.lights[light].turn_off()
         for light in lights[::-1]:
-            light.turn_on()
+            self.lights[light].turn_on()
             time.sleep(interval)
-            light.turn_off()
+            self.lights[light].turn_off()
 
 if __name__ == '__main__':
     light_list = []
