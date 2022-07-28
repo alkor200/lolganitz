@@ -2,7 +2,7 @@ import loop_main
 import time
 import keyboard
 
-buttons = ['a', 's', 'd', 'r', 'f', 't', 'z', 'u', 'j', 'i','k', 'l', 'ö']
+buttons = ['a', 's', 'd', 'r', 'f', 't', 'z', 'h','u', 'j', 'i','k', 'l']
 
 class manual_manager():
     def __init__(self, light_list: list):
