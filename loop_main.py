@@ -519,9 +519,9 @@ if __name__ == '__main__':
         light_manager.focus_on_the_ball,
         light_manager.focus_on_the_ball,
     ]
+    light_manager.start_up()
     while True:
         try:
-            """
             runtime = random.randint(30, 50)
             start = time.time()
             effect = random.choice(effects)
@@ -530,10 +530,6 @@ if __name__ == '__main__':
                 effect()
                 light_manager.all_off()
                 later = time.time()
-            """
-            #light_manager.switch_small_big()
-            #light_manager.run_in_row(interval=0.02)
-            light_manager.right_circle_fill(0.02)
         except KeyboardInterrupt:
             light_manager.all_off()
             sys.exit(0)
