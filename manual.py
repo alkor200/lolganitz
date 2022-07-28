@@ -16,8 +16,8 @@ class manual_manager():
                         self.lights[buttons.index(button)].turn_on()
                     else:
                         self.lights[buttons.index(button)].turn_off()
-            except Exception:
-                pass
+            except Exception as e:
+                print(e)
 
 
 if __name__ == '__main__':
