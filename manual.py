@@ -1,5 +1,6 @@
 import loop_main
 import time
+import keyboard
 
 buttons = ['a', 's', 'd', 'r', 'f', 't', 'z', 'u', 'j', 'i','k', 'l', 'ö']
 
@@ -8,15 +9,14 @@ class manual_manager():
         self.lights = light_list
 
     def run_manual(self):
-        while True:
-            button = input()
-            try:
-                index = buttons.index(button)
-                self.lights[index].turn_on()
-                time.sleep(0.1)
-                self.lights[index].turn_off()
-            except Exception:
-                pass
+        try:
+            for button in buttons:
+                if keyboard.is_pressed(button):
+                    self.lights[buttons.index(button)].turn_on()
+                else:
+                    self.lights[buttons.index(button)].turn_off()
+        except Exception:
+            pass
 
 
 if __name__ == '__main__':
