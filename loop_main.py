@@ -65,7 +65,7 @@ class LightManager:
         else:
             for i in range(len(self.lights)):
                 light_list[len(self.lights) - 1 - i].turn_on()
-                time.sleep(0.1)
+                time.sleep(interval)
                 light_list[len(self.lights) - 1 - i].turn_off()
 
     def multiple_run_in_row(self, interval=0.3):
@@ -457,6 +457,29 @@ class LightManager:
             for light in lights:
                 self.lights[light].turn_off()
 
+    def start_up(self):
+        self.all_on()
+        time.sleep(2)
+        for i in range(10):
+            self.strobe(interval=0.15)
+        self.all_on()
+        time.sleep(1)
+        self.run_in_row(interval=0.4)
+        self.run_in_row(interval=0.4, reverse=True)
+        self.run_in_row(interval=0.2)
+        self.run_in_row(interval=0.2, reverse=True)
+        self.all_on()
+        time.sleep(2)
+        self.all_off()
+        time.sleep(2)
+        for i in range(3):
+            self.action_7()
+        time.sleep(2)
+        for i in range(10):
+            self.strobe(interval=0.15)
+
+    def focus_on_the_ball(self):
+        time.sleep(60)
 
 if __name__ == '__main__':
     light_list = []
@@ -490,7 +513,11 @@ if __name__ == '__main__':
         light_manager.bounce,
         light_manager.left_circle_fill,
         light_manager.right_circle_fill,
-
+        light_manager.both_circle_fill,
+        light_manager.switch_small_big,
+        light_manager.focus_on_the_ball,
+        light_manager.focus_on_the_ball,
+        light_manager.focus_on_the_ball,
     ]
     while True:
         try:
@@ -504,7 +531,7 @@ if __name__ == '__main__':
                 light_manager.all_off()
                 later = time.time()
 
-            #light_manager.switch_small_big()
+            # light_manager.start_up()
 
         except KeyboardInterrupt:
             light_manager.all_off()
