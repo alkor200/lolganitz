@@ -29,4 +29,4 @@ if __name__ == '__main__':
         )
         i += 1
 
-    manual_manager.run_manual()
+    manager.run_manual()
