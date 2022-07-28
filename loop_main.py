@@ -486,7 +486,7 @@ if __name__ == '__main__':
         light_manager.every_second_light,
         light_manager.up_down,
         light_manager.parable_lights,
-        light_manager.around_the_clock
+        light_manager.around_the_clock,
         light_manager.bounce,
         light_manager.left_circle_fill,
         light_manager.right_circle_fill,
@@ -504,7 +504,7 @@ if __name__ == '__main__':
                 light_manager.all_off()
                 later = time.time()
             """
-            light_manager.both_circle_fill()
+            light_manager.switch_small_big()
 
         except KeyboardInterrupt:
             light_manager.all_off()
