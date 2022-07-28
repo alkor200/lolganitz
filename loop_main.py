@@ -445,8 +445,8 @@ class LightManager:
                 self.lights[light].turn_off()
 
     def switch_small_big(self, interval=0.4):
-        small = [0,2,3,4,6,8,10,11]
-        big = [1,5,7,9,12]
+        small = [0, 2, 3, 4, 6, 8, 10, 11]
+        big = [1, 5, 7, 9, 12]
 
         all = [small, big]
 
@@ -482,6 +482,7 @@ class LightManager:
 
     def focus_on_the_ball(self):
         time.sleep(60)
+
 
 if __name__ == '__main__':
     light_list = []
@@ -521,9 +522,9 @@ if __name__ == '__main__':
         light_manager.focus_on_the_ball,
         light_manager.focus_on_the_ball,
     ]
-    light_manager.start_up()
-    while True:
-        try:
+    try:
+        light_manager.start_up()
+        while True:
             runtime = random.randint(30, 50)
             start = time.time()
             effect = random.choice(effects)
@@ -532,10 +533,10 @@ if __name__ == '__main__':
                 effect()
                 light_manager.all_off()
                 later = time.time()
-        except KeyboardInterrupt:
-            light_manager.all_off()
-            sys.exit(0)
-        except Exception as e:
-            print(e)
-            light_manager.all_off()
-            pass
+    except KeyboardInterrupt:
+        light_manager.all_off()
+        sys.exit(0)
+    except Exception as e:
+        print(e)
+        light_manager.all_off()
+        pass
