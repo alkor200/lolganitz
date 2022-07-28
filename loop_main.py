@@ -522,21 +522,25 @@ if __name__ == '__main__':
         light_manager.focus_on_the_ball,
         light_manager.focus_on_the_ball,
     ]
-    try:
-        light_manager.start_up()
-        while True:
+    light_manager.start_up()
+    last_effect = None
+    while True:
+        try:
             runtime = random.randint(30, 50)
             start = time.time()
             effect = random.choice(effects)
+            while last_effect == effect.__name__:
+                effect = random.choice(effects)
             while later - start < runtime:
                 print(effect.__name__)
                 effect()
                 light_manager.all_off()
                 later = time.time()
-    except KeyboardInterrupt:
-        light_manager.all_off()
-        sys.exit(0)
-    except Exception as e:
-        print(e)
-        light_manager.all_off()
-        pass
+                last_effect = effect.__name__
+        except KeyboardInterrupt:
+            light_manager.all_off()
+            sys.exit(0)
+        except Exception as e:
+            print(e)
+            light_manager.all_off()
+            pass
