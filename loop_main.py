@@ -494,7 +494,7 @@ if __name__ == '__main__':
     ]
     while True:
         try:
-            """
+
             runtime = random.randint(30, 50)
             start = time.time()
             effect = random.choice(effects)
@@ -503,8 +503,8 @@ if __name__ == '__main__':
                 effect()
                 light_manager.all_off()
                 later = time.time()
-            """
-            light_manager.switch_small_big()
+
+            #light_manager.switch_small_big()
 
         except KeyboardInterrupt:
             light_manager.all_off()
