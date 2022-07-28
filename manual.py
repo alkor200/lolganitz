@@ -10,15 +10,8 @@ class manual_manager():
 
     def run_manual(self):
         while True:
-            try:
-                #for button in buttons:
-                if keyboard.is_pressed("a"):
-                # self.lights[buttons.index(button)].turn_on()
-                    self.lights[2].turn_on()
-
-
-            except Exception as e:
-                print(e)
+            for light in self.lights:
+                light.turn_on()
 
 
 if __name__ == '__main__':
