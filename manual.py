@@ -14,8 +14,7 @@ class manual_manager():
                 for button in buttons:
                     if keyboard.is_pressed(button):
                         self.lights[buttons.index(button)].turn_on()
-                    else:
-                        self.lights[buttons.index(button)].turn_off()
+
             except Exception as e:
                 print(e)
 
