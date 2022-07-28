@@ -466,6 +466,7 @@ class LightManager:
         time.sleep(1)
         self.run_in_row(interval=0.4)
         self.run_in_row(interval=0.4, reverse=True)
+        self.lights[12].turn_off()
         self.run_in_row(interval=0.2)
         self.run_in_row(interval=0.2, reverse=True)
         self.all_on()
