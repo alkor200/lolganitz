@@ -4,43 +4,30 @@ import time
 
 from collections import deque
 
+from Light import StandardLight, MCPLight, Light
+
 import RPi.GPIO as GPIO
+import mcp23017 as m
+import wiringpi as wpi
+
 
 GPIO.setmode(GPIO.BCM)
 
-relais = [26, 16, 20, 21, 5, 6, 19, 13, 18, 17, 27, 23, 22]  # , 24, 25, 12]
-
-
-class Light:
-    def __init__(self, number: int, pin: int):
-        self.number = number
-        self.pin = pin
-        self.state = False
-        GPIO.setup(self.pin, GPIO.OUT)
-        GPIO.output(self.pin, GPIO.LOW)
-
-    def evaluate(self):
-        if self.state:
-            GPIO.setup(self.pin, GPIO.HIGH)
-            print("on")
-        else:
-            GPIO.setup(self.pin, GPIO.LOW)
-            print("off")
-
-    def turn_off(self):
-        GPIO.output(self.pin, GPIO.LOW)
-
-    def turn_on(self):
-        GPIO.output(self.pin, GPIO.HIGH)
-
-    def toggle_state(self):
-        self.state = not self.state
-
+# relais = [26, 16, 20, 21, 5, 6, 19, 13, 18, 17, 27, 23, 22]  # , 24, 25, 12]
+gpio = [23, 22, 27, 18, 17, 15, 14, 4, 12, 25, 9, 1, 0, 11, 10, 24, 19, 13, 6, 5, 21, 20, 16, 26]
+number = range(40)
 
 class LightManager:
 
     def __init__(self, light_list: list):
         self.lights = light_list
+        self.mcp = m.MCP23017()
+        self.mcp.set_port_dir(m.PORTA, m.OUTPUT)
+        self.mcp.set_port_dir(m.PORTB, m.OUTPUT)
+        self.mcp.set_io_pu(m.PORTB, m.PIN_ALL, m.ENABLE)
+        self.mcp.set_io_int(m.PORTB, m.PIN_ALL,
+                            m.INT_CHANGE_LEVEL)
+        wpi.wiringPiISR(m.PIN_INTB, wpi.INT_EDGE_BOTH, m.int_callback)
 
     ### UTILS ####
 
@@ -488,11 +475,18 @@ if __name__ == '__main__':
     light_list = []
     i = 0
     light_manager = LightManager(light_list)
-    for pin in relais:
+    for pin in gpio:
         light_list.append(
-            Light(number=i, pin=pin)
+            StandardLight(number=i, pin=pin)
         )
         i += 1
+    porta_portb = [m.PORTA, m.PORTB]
+    for port in porta_portb:
+        for pin in m.PIN_TRANSLATE:
+            light_list.append(
+                MCPLight(light_manager.mcp, port, number=i, pin=pin)
+            )
+            i += 1
     later = time.time()
 
     effects = [
@@ -510,17 +504,17 @@ if __name__ == '__main__':
         light_manager.action_7,
         light_manager.ping_pong_inverted,
         light_manager.every_second_light,
-        light_manager.up_down,
+        # light_manager.up_down,
         light_manager.parable_lights,
-        light_manager.around_the_clock,
-        light_manager.bounce,
-        light_manager.left_circle_fill,
-        light_manager.right_circle_fill,
-        light_manager.both_circle_fill,
-        light_manager.switch_small_big,
-        light_manager.focus_on_the_ball,
-        light_manager.focus_on_the_ball,
-        light_manager.focus_on_the_ball,
+        #light_manager.around_the_clock,
+        # light_manager.bounce,
+        # light_manager.left_circle_fill,
+        # light_manager.right_circle_fill,
+        # light_manager.both_circle_fill,
+        # light_manager.switch_small_big,
+        # light_manager.focus_on_the_ball,
+        # light_manager.focus_on_the_ball,
+        # light_manager.focus_on_the_ball,
     ]
     try:
         light_manager.start_up()
