@@ -9,7 +9,7 @@ sender[1].multicast = False  # set multicast to True
 sender[1].destination = "10.10.7.17"
 # Keep in mind that if multicast is on, unicast is not used
 
-interval = 0.2
+interval = 0.05
 start_time = time.time()
 high = True
 # while True:
