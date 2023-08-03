@@ -10,14 +10,52 @@ import RPi.GPIO as GPIO
 import mcp23017 as m
 import wiringpi as wpi
 
-
 GPIO.setmode(GPIO.BCM)
 
 # relais = [26, 16, 20, 21, 5, 6, 19, 13, 18, 17, 27, 23, 22]  # , 24, 25, 12]
 gpio = [23, 22, 27, 17, 18, 15, 14, 4, 12, 25, 9, 1, 0, 11, 10, 24, 19, 13, 6, 5, 21, 20, 16, 26]
-#gpio = []
-
+gpio = [23,
+        22,
+        27,
+        17,
+        18,
+        15,
+        4,
+        14,
+        12,
+        25,
+        9,
+        10,
+        (m.PORTA, m.PIN0),
+        (m.PORTB, m.PIN0),
+        24,
+        13,
+        6,
+        5,
+        21,
+        20,
+        26,
+        (m.PORTA, m.PIN7),
+        (m.PORTA, m.PIN5),
+        (m.PORTA, m.PIN3),
+        (m.PORTA, m.PIN6),
+        (m.PORTA, m.PIN1),
+        (m.PORTA, m.PIN4),
+        (m.PORTA, m.PIN2),
+        (m.PORTB, m.PIN1),
+        (m.PORTB, m.PIN2),
+        (m.PORTB, m.PIN5),
+        (m.PORTB, m.PIN4),
+        (m.PORTB, m.PIN6),
+        (m.PORTB, m.PIN7),
+        (m.PORTB, m.PIN3),
+        1,
+        0,
+        11,
+        19,
+        16]
 number = range(40)
+
 
 class LightManager:
 
@@ -470,20 +508,20 @@ class LightManager:
     def focus_on_the_ball(self):
         time.sleep(60)
 
+
 if __name__ == '__main__':
     light_list = []
     i = 0
     light_manager = LightManager(light_list)
     for pin in gpio:
-        light_list.append(
-            StandardLight(number=i, pin=pin)
-        )
-        i += 1
-    porta_portb = [m.PORTA, m.PORTB]
-    for port in porta_portb:
-        for pin in m.PIN_TRANSLATE:
+        if type(pin) is tuple:
             light_list.append(
-                MCPLight(light_manager.mcp, port, number=i, pin=pin)
+                MCPLight(light_manager.mcp, pin[0], number=i, pin=pin[1])
+            )
+            i += 1
+        else:
+            light_list.append(
+                StandardLight(number=i, pin=pin)
             )
             i += 1
     later = time.time()
@@ -505,7 +543,7 @@ if __name__ == '__main__':
         light_manager.every_second_light,
         # light_manager.up_down,
         # light_manager.parable_lights,
-        #light_manager.around_the_clock,
+        # light_manager.around_the_clock,
         # light_manager.bounce,
         # light_manager.left_circle_fill,
         # light_manager.right_circle_fill,
@@ -534,7 +572,7 @@ if __name__ == '__main__':
                     later = time.time()
                     last_effect = effect.__name__
                     """
-                    
+
     except KeyboardInterrupt:
         light_manager.all_off()
         sys.exit(0)

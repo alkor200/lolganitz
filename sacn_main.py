@@ -46,7 +46,6 @@ gpio = [23,
         19,
         16]
 
-
 light_list = []
 i = 0
 light_manager = LightManager(light_list)
@@ -61,34 +60,33 @@ for pin in gpio:
             StandardLight(number=i, pin=pin)
         )
         i += 1
-# porta_portb = [m.PORTA, m.PORTB]
-# for port in porta_portb:
+    # porta_portb = [m.PORTA, m.PORTB]
+    # for port in porta_portb:
     # for pin in m.PIN_TRANSLATE:
+# start sACN receiver
+receiver = sacn.sACNreceiver()
+receiver.join_multicast(1)
+receiver.start()  # start the receiving thread
 
-try:
-    # start sACN receiver
-    receiver = sacn.sACNreceiver()
-    receiver.join_multicast(1)
-    receiver.start()  # start the receiving thread
+while True:
+    try:
+        @receiver.listen_on('universe', universe=1)  # listens on universe 1
+        def callback(packet):  # packet type: sacn.DataPacket
+            # print(packet.dmxData)  # print the received DMX data
+            for count, dmx_value in enumerate(packet.dmxData[:40]):
+                if dmx_value > 50:
+                    light_manager.lights[count].turn_on()
+                else:
+                    light_manager.lights[count].turn_off()
 
-    @receiver.listen_on('universe', universe=1)  # listens on universe 1
-    def callback(packet):  # packet type: sacn.DataPacket
-        # print(packet.dmxData)  # print the received DMX data
-        for count, dmx_value in enumerate(packet.dmxData[:40]):
-            if dmx_value > 50:
-                light_manager.lights[count].turn_on()
-            else:
-                light_manager.lights[count].turn_off()
-    time.sleep(100)
 
-except KeyboardInterrupt:
-    receiver.stop()
-    receiver.leave_multicast(1)
-    light_manager.all_off()
-    sys.exit(0)
-except Exception as e:
-    receiver.stop()
-    receiver.leave_multicast(1)
-    print(e)
-    light_manager.all_off()
-    pass
+        time.sleep(100)
+
+    except KeyboardInterrupt:
+        receiver.stop()
+        receiver.leave_multicast(1)
+        light_manager.all_off()
+        sys.exit(0)
+    except Exception as e:
+        print(e)
+        time.sleep(1)
