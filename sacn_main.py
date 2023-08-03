@@ -6,8 +6,6 @@ import mcp23017 as m
 
 _gpio = [23, 22, 27, 17, 18, 15, 14, 4, 12, 25, 9, 1, 0, 11, 10, 24, 19, 13, 6, 5, 21, 20, 16, 26]
 gpio = [23,
-        22,
-        27,
         17,
         18,
         15,
@@ -38,13 +36,15 @@ gpio = [23,
         (m.PORTB, m.PIN5),
         (m.PORTB, m.PIN4),
         (m.PORTB, m.PIN6),
-        (m.PORTB, m.PIN7),
-        (m.PORTB, m.PIN3),
-        1,
-        0,
-        11,
-        19,
-        16]
+        (m.PORTB, m.PIN7)]
+        #(m.PORTB, m.PIN3),
+        #1,
+        #0,
+        #11,
+        #19,
+        #16,
+        #22,
+        #27]
 
 light_list = []
 i = 0
