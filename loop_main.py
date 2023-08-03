@@ -14,7 +14,9 @@ import wiringpi as wpi
 GPIO.setmode(GPIO.BCM)
 
 # relais = [26, 16, 20, 21, 5, 6, 19, 13, 18, 17, 27, 23, 22]  # , 24, 25, 12]
-gpio = [23, 22, 27, 18, 17, 15, 14, 4, 12, 25, 9, 1, 0, 11, 10, 24, 19, 13, 6, 5, 21, 20, 16, 26]
+gpio = [23, 22, 27, 17, 18, 15, 14, 4, 12, 25, 9, 1, 0, 11, 10, 24, 19, 13, 6, 5, 21, 20, 16, 26]
+#gpio = []
+
 number = range(40)
 
 class LightManager:
@@ -27,16 +29,14 @@ class LightManager:
         self.mcp.set_io_pu(m.PORTB, m.PIN_ALL, m.ENABLE)
         self.mcp.set_io_int(m.PORTB, m.PIN_ALL,
                             m.INT_CHANGE_LEVEL)
-        wpi.wiringPiISR(m.PIN_INTB, wpi.INT_EDGE_BOTH, m.int_callback)
 
     ### UTILS ####
-
     def all_on(self):
-        for light in light_list:
+        for light in self.lights:
             light.turn_on()
 
     def all_off(self):
-        for light in light_list:
+        for light in self.lights:
             light.turn_off()
 
     def check_unique_lights(self, light_indices):
@@ -470,7 +470,6 @@ class LightManager:
     def focus_on_the_ball(self):
         time.sleep(60)
 
-
 if __name__ == '__main__':
     light_list = []
     i = 0
@@ -498,14 +497,14 @@ if __name__ == '__main__':
         light_manager.multiple_run_in_row,
         light_manager.action_2,
         light_manager.action_3,
-        light_manager.action_4,
+        # light_manager.action_4,
         light_manager.action_5,
         light_manager.action_6,
         light_manager.action_7,
         light_manager.ping_pong_inverted,
         light_manager.every_second_light,
         # light_manager.up_down,
-        light_manager.parable_lights,
+        # light_manager.parable_lights,
         #light_manager.around_the_clock,
         # light_manager.bounce,
         # light_manager.left_circle_fill,
@@ -517,6 +516,9 @@ if __name__ == '__main__':
         # light_manager.focus_on_the_ball,
     ]
     try:
+        light_manager.all_on()
+
+        """
         light_manager.start_up()
         last_effect = None
         while True:
@@ -531,6 +533,8 @@ if __name__ == '__main__':
                     light_manager.all_off()
                     later = time.time()
                     last_effect = effect.__name__
+                    """
+                    
     except KeyboardInterrupt:
         light_manager.all_off()
         sys.exit(0)
